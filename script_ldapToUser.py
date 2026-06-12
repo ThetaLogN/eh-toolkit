@@ -8,6 +8,9 @@ if "-h" in sys.argv or "--help" in sys.argv:
     print("  Estrae ed elenca in modo pulito gli username dall'output di un comando NetExec/CME LDAP.")
     print("\nArgomenti:")
     print("  <file_di_input>   Il file di testo contenente l'output grezzo di 'nxc ldap ... --users'")
+    print("Esempio python3 ../script/script_ldapToUser.py output.txt")
+    print("		[+] Estrazione completata! 9 utenti puliti salvati in 'users.txt'.")
+
     sys.exit(0)
 
 # Controlla se non è stato passato l'argomento obbligatorio
