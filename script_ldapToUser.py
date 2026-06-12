@@ -1,6 +1,19 @@
-# Nome del file di input e di output
-input_file = "output_nxc.txt"
+import sys
+import os
+
+# Controlla se hai passato il file come argomento
+if len(sys.argv) < 2:
+    print(f"Uso: python3 {sys.argv[0]} <file_di_input>")
+    sys.exit(1)
+
+# Prende il file di input dall'argomento del terminale
+input_file = sys.argv[1]
 output_file = "users.txt"
+
+# Controlla se il file inserito esiste davvero
+if not os.path.exists(input_file):
+    print(f"[-] Errore: Il file '{input_file}' non esiste nella cartella corrente!")
+    sys.exit(1)
 
 usernames = []
 
