@@ -1,9 +1,19 @@
 import sys
 import os
 
-# Controlla se hai passato il file come argomento
-if len(sys.argv) < 2:
+# Controlla se l'utente ha chiesto l'aiuto (-h o --help)
+if "-h" in sys.argv or "--help" in sys.argv:
     print(f"Uso: python3 {sys.argv[0]} <file_di_input>")
+    print("\nDescrizione:")
+    print("  Estrae ed elenca in modo pulito gli username dall'output di un comando NetExec/CME LDAP.")
+    print("\nArgomenti:")
+    print("  <file_di_input>   Il file di testo contenente l'output grezzo di 'nxc ldap ... --users'")
+    sys.exit(0)
+
+# Controlla se non è stato passato l'argomento obbligatorio
+if len(sys.argv) < 2:
+    print(f"[-] Errore: Manca il file di input.")
+    print(f"Uso corretto: python3 {sys.argv[0]} <file_di_input> (Usa -h per l'aiuto)")
     sys.exit(1)
 
 # Prende il file di input dall'argomento del terminale
