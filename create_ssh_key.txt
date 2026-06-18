@@ -1,0 +1,14 @@
+ssh-keygen -t rsa -b 4096 -f id_rsa_devhub
+cat id_rsa_devhub.pub
+
+cd ~/
+mkdir -p .ssh
+
+echo "INCOLLA_QUI_LA_TUA_CHIAVE_PUBBLICA" >> .ssh/authorized_keys
+
+chmod 700 .ssh
+chmod 600 .ssh/authorized_keys
+
+ssh -i id_rsa_devhub mcp-dev@<IP_DELLA_MACCHINA>
+
+
