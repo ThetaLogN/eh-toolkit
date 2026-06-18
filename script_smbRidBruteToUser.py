@@ -60,5 +60,5 @@ def main():
     print(f"[+] Salvati in: {args.output}")
 
 
-if name == "main":
+if __name__ == "__main__":
     main()

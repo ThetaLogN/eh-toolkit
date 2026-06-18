@@ -1,6 +1,7 @@
 import os
 import re
 import math
+import argparse
 
 # 1. Pattern estesi basati su standard industriali (es. rilevamento tool di sniffing/gitleaks)
 ADVANCED_PATTERNS = {
@@ -21,6 +22,7 @@ IGNORE_EXTENSIONS = {'.exe', '.dll', '.so', '.dylib', '.png', '.jpg', '.jpeg', '
 
 SCRIPT_NAME = os.path.basename(__file__)
 
+
 def calculate_shannon_entropy(data):
     """Calcola l'entropia di Shannon di una stringa per verificare la casualità (es. chiavi generate)."""
     if not data:
@@ -30,6 +32,7 @@ def calculate_shannon_entropy(data):
         p_x = float(data.count(x)) / len(data)
         entropy -= p_x * math.log(p_x, 2)
     return entropy
+
 
 def check_high_entropy_words(line, threshold=4.5):
     """Scompone la riga in parole e cerca stringhe ad alta entropia (potenziali password/chiavi offuscate)."""
@@ -45,26 +48,25 @@ def check_high_entropy_words(line, threshold=4.5):
             high_entropy_matches.append((word, round(entropy, 2)))
     return high_entropy_matches
 
-def scan_file(file_path):
+
+def scan_file(file_path, verbose=False):
     try:
         with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
             for line_num, line in enumerate(f, 1):
                 clean_line = line.strip()
                 if not clean_line:
                     continue
-                
+
                 # A. Verifica tramite Regex
                 for name, pattern in ADVANCED_PATTERNS.items():
                     match = re.search(pattern, clean_line)
                     if match:
-                        # Estrae la parte sensibile se catturata dal gruppo, altrimenti l'intera linea
-                        match_text = match.group(2) if len(match.groups()) >= 2 else match.group(0)
-                        print(f"[!] REQUISITO MATCH: [{name}]")
+                        print(f"[!] REGEX MATCH RILEVATO: [{name}]")
                         print(f"    File:  {file_path}")
                         print(f"    Linea {line_num}: {clean_line[:120]}")
                         print("-" * 60)
-                        return # Evita duplicati sulla stessa riga
-                
+                        return  # Evita duplicati sulla stessa riga
+
                 # B. Verifica tramite Entropia (Trova ciò che le regex non coprono)
                 high_entropy_secrets = check_high_entropy_words(clean_line)
                 for secret, ent_score in high_entropy_secrets:
@@ -76,35 +78,56 @@ def scan_file(file_path):
                     print(f"    Linea {line_num}: Strumento casuale rilevato -> {secret[:50]}")
                     print(f"    Contesto: {clean_line[:120]}")
                     print("-" * 60)
-                    
-    except Exception:
-        pass # Salta file non accessibili o corrotti
 
-def start_scan(target_directory):
+    except Exception as e:
+        if verbose:
+            print(f"[-] Errore durante la scansione del file {file_path}: {e}")
+
+
+def start_scan(target_directory, verbose=False):
     print(f"[*] Avvio scansione ad alta robustezza in: {target_directory}")
     print("[*] Nota: Verranno analizzati pattern specifici e anomalie ad alta entropia.")
     print("=" * 70)
-    
+
     for root, dirs, files in os.walk(target_directory):
         # Modifica in-place per saltare le directory ignorate
         dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
-        
+
         for file in files:
             if file == SCRIPT_NAME:
                 continue
             if any(file.endswith(ext) for ext in IGNORE_EXTENSIONS):
                 continue
-                
-            file_path = os.path.join(root, file)
-            scan_file(file_path)
 
-if __name__ == "__main__":
-    target_path = input("Inserisci il percorso da scansionare (Invio per cartella corrente): ").strip()
-    if not target_path:
-        target_path = "."
-        
-    if os.path.exists(target_path):
-        start_scan(target_path)
+            file_path = os.path.join(root, file)
+            scan_file(file_path, verbose=verbose)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Analizza file e cartelle alla ricerca di password, chiavi API o dati ad alta entropia."
+    )
+    parser.add_argument(
+        "target_directory",
+        nargs="?",
+        default=".",
+        help="Il percorso della cartella o del file da scansionare (default: cartella corrente '.')"
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Mostra gli errori di lettura dei file (es. permessi negati)"
+    )
+
+    args = parser.parse_args()
+
+    if os.path.exists(args.target_directory):
+        start_scan(args.target_directory, verbose=args.verbose)
         print("[*] Scansione terminata.")
     else:
-        print("[-] Percorso inesistente.")
+        print(f"[-] Percorso inesistente: {args.target_directory}")
+
+
+if __name__ == "__main__":
+    main()

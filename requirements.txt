@@ -1,0 +1,5 @@
+requests>=2.25.0
+beautifulsoup4>=4.9.0
+lxml>=4.6.0
+ldap3>=2.9.0
+pypdf>=3.0.0

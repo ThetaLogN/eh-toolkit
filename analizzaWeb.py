@@ -20,7 +20,11 @@ def analizza_url(url):
         sys.exit(1)
 
     html_content = risposta.text
-    soup = BeautifulSoup(html_content, "lxml")
+    try:
+        soup = BeautifulSoup(html_content, "lxml")
+    except Exception:
+        # Fallback se lxml non è installato
+        soup = BeautifulSoup(html_content, "html.parser")
 
     # Estraiamo il testo pulito mantenendo gli spazi
     testo_visibile = soup.get_text(separator=" ")
