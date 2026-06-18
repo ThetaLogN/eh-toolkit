@@ -17,7 +17,9 @@ Ogni script è indipendente, strutturato con gestione degli argomenti da riga di
    - [ad_password_spray.py](#ad_password_spraypy)
    - [document_metadata_extractor.py](#document_metadata_extractorpy)
    - [linux_privesc_helper.py](#linux_privesc_helperpy)
+   - [container_audit.sh](#container_auditsh)
 3. [Download di Strumenti Esterni](#download-di-strumenti-esterni)
+4. [Cheat Sheet Comandi PowerShell (powershell_commands.md)](file:///Users/giorgiomartucci/eh-toolkit/eh-toolkit/powershell_commands.md)
 
 ---
 
@@ -169,6 +171,22 @@ Esegue una scansione locale non intrusiva alla ricerca di vettori di escalation 
 python3 linux_privesc_helper.py
 ```
 *(Nota: Lo script può essere trasferito e avviato direttamente come utente limitato su una macchina Linux target).*
+
+---
+
+### container_audit.sh
+Esegue un audit locale di sicurezza avanzato all'interno di un container Linux (es. Docker) per valutare il livello di isolamento e hardening. Verifica:
+* Contesto utente e mappatura degli User Namespace (root mapping).
+* Condivisione o isolamento dei Namespace dell'host (PID, Network).
+* Attivazione e configurazione di LSM (AppArmor e filtri Seccomp).
+* Presenza di Mount point host esposti e sensibili (es. `/var/run/docker.sock`, `/etc/shadow`, `/home`).
+* Accesso diretto a dispositivi a blocchi del disco (es. `/dev/sda`) e presenza di Capabilities pericolose (es. `SYS_ADMIN`, `SYS_PTRACE`, `SYS_MODULE`).
+
+**Uso:**
+```bash
+chmod +x container_audit.sh
+./container_audit.sh
+```
 
 ---
 
