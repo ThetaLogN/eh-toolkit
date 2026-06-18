@@ -20,6 +20,7 @@ Ogni script è indipendente, strutturato con gestione degli argomenti da riga di
    - [container_audit.sh](#container_auditsh)
 3. [Download di Strumenti Esterni](#download-di-strumenti-esterni)
 4. [Cheat Sheet Comandi PowerShell (powershell_commands.md)](file:///Users/giorgiomartucci/eh-toolkit/eh-toolkit/powershell_commands.md)
+5. [Cheat Sheet Upgrade Shell (shell_upgrade.md)](file:///Users/giorgiomartucci/eh-toolkit/eh-toolkit/shell_upgrade.md)
 
 ---
 
@@ -198,6 +199,7 @@ I file scaricati vengono posizionati nella cartella `bin/` (strutturata in `bin/
 
 **Strumenti scaricati:**
 * **LinPEAS (`linpeas.sh`)**: Script per privilege escalation locale su Linux.
+* **git-dumper**: Tool in Python per scaricare repository `.git` esposti pubblicamente sui server web.
 * **WinPEAS (`winPEASany.exe`, `winPEAS.bat`)**: Strumenti per privilege escalation locale su Windows.
 * **SharpGPOAbuse (`SharpGPOAbuse.exe`)**: Strumento in C# per abusare dei permessi GPO su Active Directory.
 * **Seatbelt (`Seatbelt.exe`)**: Utility C# per raccogliere informazioni sulla sicurezza locale del sistema Windows.

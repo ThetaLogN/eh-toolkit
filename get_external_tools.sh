@@ -31,32 +31,45 @@ curl -L -s -f "https://github.com/peass-ng/PEASS-ng/releases/latest/download/lin
 chmod +x bin/linux/linpeas.sh
 echo -e "${GREEN}[+] LinPEAS salvato in bin/linux/linpeas.sh (eseguibile)${RESET}"
 
+# 2. Git-Dumper
+echo -e "${NC}[*] Clono git-dumper...${RESET}"
+if [ -d "bin/linux/git-dumper" ]; then
+    rm -rf bin/linux/git-dumper
+fi
+git clone --depth 1 "https://github.com/arthaud/git-dumper.git" "bin/linux/git-dumper"
+echo -e "${GREEN}[+] git-dumper clonato in bin/linux/git-dumper/${RESET}"
+
 # ----------------- WINDOWS TOOLS -----------------
 echo -e "${BLUE}\n=== STRUMENTI WINDOWS ===${RESET}"
 
-# 2. WinPEAS EXE
+# 3. WinPEAS EXE
 echo -e "${NC}[*] Download di WinPEAS (winPEASany.exe)...${RESET}"
-curl -L -s -f "https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASany.exe" -o "bin/windows/winPEASany.exe"
-echo -e "${GREEN}[+] WinPEAS (EXE) salvato in bin/windows/winPEASany.exe${RESET}"
+curl -L -s -f "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASx64.exe" -o "bin/windows/winPEASx64.exe"
+echo -e "${GREEN}[+] WinPEAS (EXE) salvato in bin/windows/winPEASx64.exe${RESET}"
 
-# 3. WinPEAS BAT
+# 4. WinPEAS BAT
 echo -e "${NC}[*] Download di WinPEAS (winPEAS.bat)...${RESET}"
 curl -L -s -f "https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEAS.bat" -o "bin/windows/winPEAS.bat"
 echo -e "${GREEN}[+] WinPEAS (BAT) salvato in bin/windows/winPEAS.bat${RESET}"
 
-# 4. SharpGPOAbuse (C# tool da SharpCollection)
+# 5. SharpGPOAbuse (C# tool da SharpCollection)
 echo -e "${NC}[*] Download di SharpGPOAbuse.exe...${RESET}"
-curl -L -s -f "https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.7_Any/SharpGPOAbuse.exe" -o "bin/windows/SharpGPOAbuse.exe"
+curl -L -s -f "https://github.com/Flangvik/SharpCollection/blob/master/NetFramework_4.0_x64/SharpGPOAbuse.exe" -o "bin/windows/SharpGPOAbuse.exe"
 echo -e "${GREEN}[+] SharpGPOAbuse salvato in bin/windows/SharpGPOAbuse.exe${RESET}"
 
-# 5. Seatbelt (C# tool da SharpCollection)
+# 6. Seatbelt (C# tool da SharpCollection)
 echo -e "${NC}[*] Download di Seatbelt.exe...${RESET}"
 curl -L -s -f "https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.7_Any/Seatbelt.exe" -o "bin/windows/Seatbelt.exe"
 echo -e "${GREEN}[+] Seatbelt salvato in bin/windows/Seatbelt.exe${RESET}"
 
-# 6. PrintSpoofer
+# 7. PrintSpoofer
 echo -e "${NC}[*] Download di PrintSpoofer64.exe...${RESET}"
 curl -L -s -f "https://github.com/itm4n/PrintSpoofer/releases/latest/download/PrintSpoofer64.exe" -o "bin/windows/PrintSpoofer64.exe"
 echo -e "${GREEN}[+] PrintSpoofer64 salvato in bin/windows/PrintSpoofer64.exe${RESET}"
 
 echo -e "${GREEN}\n[+] Operazione completata! Tutti gli strumenti sono stati scaricati in 'bin/'.${RESET}"
+
+# 8. GodPotato
+echo -e "${NC}[*] Download di GodPotato-NET4.exe...${RESET}"
+curl -L -s -f "https://github.com/BeichenDream/GodPotato/releases/download/V1.20/GodPotato-NET4.exe" -o "bin/windows/GodPotato-NET4.exe"
+echo -e "${GREEN}[+] GodPotato-NET4.exe salvato in bin/windows/GodPotato-NET4.exe${RESET}"
