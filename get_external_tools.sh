@@ -62,9 +62,10 @@ echo -e "${NC}[*] Download di PrintSpoofer64.exe...${RESET}"
 curl -L -s -f "https://github.com/itm4n/PrintSpoofer/releases/latest/download/PrintSpoofer64.exe" -o "bin/windows/PrintSpoofer64.exe"
 echo -e "${GREEN}[+] PrintSpoofer64 salvato in bin/windows/PrintSpoofer64.exe${RESET}"
 
-echo -e "${GREEN}\n[+] Operazione completata! Tutti gli strumenti sono stati scaricati in 'bin/'.${RESET}"
-
 # 8. GodPotato
 echo -e "${NC}[*] Download di GodPotato-NET4.exe...${RESET}"
 curl -L -s -f "https://github.com/BeichenDream/GodPotato/releases/download/V1.20/GodPotato-NET4.exe" -o "bin/windows/GodPotato-NET4.exe"
 echo -e "${GREEN}[+] GodPotato-NET4.exe salvato in bin/windows/GodPotato-NET4.exe${RESET}"
+
+
+echo -e "${GREEN}\n[+] Operazione completata! Tutti gli strumenti sono stati scaricati in 'bin/'.${RESET}"
