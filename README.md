@@ -17,6 +17,7 @@ Ogni script è indipendente, strutturato con gestione degli argomenti da riga di
    - [ad_password_spray.py](#ad_password_spraypy)
    - [document_metadata_extractor.py](#document_metadata_extractorpy)
    - [linux_privesc_helper.py](#linux_privesc_helperpy)
+3. [Download di Strumenti Esterni](#download-di-strumenti-esterni)
 
 ---
 
@@ -168,3 +169,28 @@ Esegue una scansione locale non intrusiva alla ricerca di vettori di escalation 
 python3 linux_privesc_helper.py
 ```
 *(Nota: Lo script può essere trasferito e avviato direttamente come utente limitato su una macchina Linux target).*
+
+---
+
+## Download di Strumenti Esterni
+
+Il repository include uno script di utilità bash chiamato `get_external_tools.sh` per scaricare automaticamente l'ultima versione dei migliori strumenti esterni per Windows e Linux direttamente dalle release ufficiali dei rispettivi autori.
+
+I file scaricati vengono posizionati nella cartella `bin/` (strutturata in `bin/linux` e `bin/windows`) e sono **automaticamente esclusi da Git** tramite il file `.gitignore` per evitare di caricare accidentalmente file binari pesanti o segnalati dagli antivirus.
+
+**Strumenti scaricati:**
+* **LinPEAS (`linpeas.sh`)**: Script per privilege escalation locale su Linux.
+* **WinPEAS (`winPEASany.exe`, `winPEAS.bat`)**: Strumenti per privilege escalation locale su Windows.
+* **SharpGPOAbuse (`SharpGPOAbuse.exe`)**: Strumento in C# per abusare dei permessi GPO su Active Directory.
+* **Seatbelt (`Seatbelt.exe`)**: Utility C# per raccogliere informazioni sulla sicurezza locale del sistema Windows.
+* **PrintSpoofer (`PrintSpoofer64.exe`)**: Exploit locale per elevare i privilegi da Service Account a SYSTEM su Windows Server.
+
+**Uso:**
+```bash
+chmod +x get_external_tools.sh
+./get_external_tools.sh
+```
+Una volta scaricati, puoi esporre la cartella `bin/` usando un server HTTP Python per caricarli sui tuoi target:
+```bash
+python3 -m http.server 80
+```

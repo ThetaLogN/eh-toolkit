@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# External Binaries Directory
+bin/
+
+# Default Script Outputs (to prevent credential/user leak)
+users.txt
+username.txt
+usernames.txt
+valid_credentials.txt
+test_metadata.csv
+test_usernames.txt
+test_ldap_users.txt
+test_smb_users.txt
