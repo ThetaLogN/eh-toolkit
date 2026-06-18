@@ -47,11 +47,6 @@ echo -e "${NC}[*] Download di WinPEAS (winPEASany.exe)...${RESET}"
 curl -L -s -f "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASx64.exe" -o "bin/windows/winPEASx64.exe"
 echo -e "${GREEN}[+] WinPEAS (EXE) salvato in bin/windows/winPEASx64.exe${RESET}"
 
-# 4. WinPEAS BAT
-echo -e "${NC}[*] Download di WinPEAS (winPEAS.bat)...${RESET}"
-curl -L -s -f "https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEAS.bat" -o "bin/windows/winPEAS.bat"
-echo -e "${GREEN}[+] WinPEAS (BAT) salvato in bin/windows/winPEAS.bat${RESET}"
-
 # 5. SharpGPOAbuse (C# tool da SharpCollection)
 echo -e "${NC}[*] Download di SharpGPOAbuse.exe...${RESET}"
 curl -L -s -f "https://github.com/Flangvik/SharpCollection/blob/master/NetFramework_4.0_x64/SharpGPOAbuse.exe" -o "bin/windows/SharpGPOAbuse.exe"
