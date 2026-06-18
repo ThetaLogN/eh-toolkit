@@ -16,6 +16,7 @@ Ogni script è indipendente, strutturato con gestione degli argomenti da riga di
    - [script_wordlistFromCSV.py](#script_wordlistfromcsvpy)
    - [ad_password_spray.py](#ad_password_spraypy)
    - [document_metadata_extractor.py](#document_metadata_extractorpy)
+   - [linux_privesc_helper.py](#linux_privesc_helperpy)
 
 ---
 
@@ -26,6 +27,8 @@ Il toolkit è compatibile con Python 3. Per installare le librerie esterne richi
 ```bash
 pip install -r requirements.txt
 ```
+
+*(Nota: Lo script `linux_privesc_helper.py` è scritto in Python nativo e non richiede alcuna libreria aggiuntiva).*
 
 ---
 
@@ -148,3 +151,20 @@ python3 document_metadata_extractor.py <percorso_target> [-o <file_output>]
 ```bash
 python3 document_metadata_extractor.py /var/www/uploads/ -o metadati_estratti.csv
 ```
+
+---
+
+### linux_privesc_helper.py
+Esegue una scansione locale non intrusiva alla ricerca di vettori di escalation dei privilegi su macchine Linux. Non richiede librerie di terze parti (Python standard puro) e verifica:
+* Informazioni utente/sistema e appartenenza a gruppi sensibili (es. `docker`, `lxd`, `shadow`).
+* Privilegi sudo disponibili senza password (tramite `sudo -n -l`).
+* Presenza di file **SUID/SGID** mappati rispetto a binari noti vulnerabili su GTFOBins.
+* File di sistema critici con permessi di scrittura aperti.
+* Percorsi degli eseguibili nei **cronjob** di sistema e permessi di scrittura ad essi associati.
+* Connessioni TCP attive decodificate direttamente da `/proc/net/tcp` (evidenziando i listener locali non esposti).
+
+**Uso:**
+```bash
+python3 linux_privesc_helper.py
+```
+*(Nota: Lo script può essere trasferito e avviato direttamente come utente limitato su una macchina Linux target).*
