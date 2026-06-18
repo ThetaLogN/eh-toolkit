@@ -20,7 +20,7 @@ Questa guida rapida mostra i comandi per effettuare l'upgrade di una shell limit
    * Premi **`INVIO`** due volte per confermare e riattivare la visualizzazione.
 4. Imposta la variabile d'ambiente del terminale per abilitare i colori e la compatibilità estesa:
    ```bash
-   export TERM=xterm-256color
+   export TERM=xterm
    ```
 
 ---
@@ -43,5 +43,5 @@ Se Python non è presente o utilizzabile sul sistema target, puoi usare l'utilit
    * Premi **`INVIO`** due volte per confermare e riattivare la visualizzazione.
 4. Imposta la variabile d'ambiente del terminale per abilitare i colori e la compatibilità estesa:
    ```bash
-   export TERM=xterm-256color
+   export TERM=xterm
    ```

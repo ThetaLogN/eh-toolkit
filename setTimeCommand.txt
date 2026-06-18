@@ -1,0 +1,2 @@
+sudo timedatectl set-ntp false
+sudo ntpdate -u 10.129.24.175 
